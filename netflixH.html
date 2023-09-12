@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>NetFlix</title>
+        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<style>
+		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+}
+.wrapper{
+  background:#000608;
+  
+  position: fixed;
+  width: 100%;
+}
+.wrapper nav{
+  position: relative;
+  display: flex;
+  max-width: calc(100% - 200px);
+  margin: 0 auto;
+  height: 70px;
+  align-items: center;
+  justify-content: space-between;
+}
+nav .content{
+  display: flex;
+  align-items: center;
+}
+nav .content .links{
+  margin-left: 80px;
+  display: flex;
+}
+.content .logo a{
+  color: #e40d0d;
+  font-size: 30px;
+  font-weight: 600;
+}
+.content .links li{
+  list-style: none;
+  line-height: 70px;
+}
+.content .links li a,
+.content .links li label{
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 9px 17px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+.content .links li label{
+  display: none;
+}
+.content .links li a:hover,
+.content .links li label:hover{
+  background: #e20909;
+}
+.wrapper .search-icon,
+.wrapper .menu-icon{
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 70px;
+  width: 70px;
+  text-align: center;
+}
+.wrapper .menu-icon{
+  display: none;
+}
+.wrapper #show-search:checked ~ .search-icon i::before{
+  content: "\f00d";
+}
+
+.wrapper .search-box{
+  position: absolute;
+  height: 100%;
+  max-width: calc(100% - 50px);
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+.wrapper #show-search:checked ~ .search-box{
+  opacity: 1;
+  pointer-events: auto;
+}
+.search-box input{
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  color: #fff;
+  background: #171c24;
+  padding: 0 100px 0 15px;
+}
+.search-box input::placeholder{
+  color: #f2f2f2;
+}
+.search-box .go-icon{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 60px;
+  width: 70px;
+  background: #171c24;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+.wrapper input[type="checkbox"]{
+  display: none;
+}
+
+.content .links ul{
+  position: absolute;
+  background: #171c24;
+  top: 80px;
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+}
+.content .links li:hover > ul{
+  top: 70px;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s ease;
+}
+.content .links ul li a{
+  display: block;
+  width: 100%;
+  line-height: 30px;
+  border-radius: 0px!important;
+}
+.content .links ul ul{
+  position: absolute;
+  top: 0;
+  right: calc(-100% + 8px);
+}
+.content .links ul li{
+  position: relative;
+}
+.content .links ul li:hover ul{
+  top: 0;
+}
+
+
+@media screen and (max-width: 1250px){
+  .wrapper nav{
+    max-width: 100%;
+    padding: 0 20px;
+  }
+  nav .content .links{
+    margin-left: 30px;
+  }
+  .content .links li a{
+    padding: 8px 13px;
+  }
+  .wrapper .search-box{
+    max-width: calc(100% - 100px);
+  }
+  .wrapper .search-box input{
+    padding: 0 100px 0 15px;
+  }
+}
+
+@media screen and (max-width: 900px){
+  .wrapper .menu-icon{
+    display: block;
+  }
+  .wrapper #show-menu:checked ~ .menu-icon i::before{
+    content: "\f00d";
+  }
+  nav .content .links{
+    display: block;
+    position: fixed;
+    background: #cc00ff;
+    height: 100%;
+    width: 100%;
+    top: 70px;
+    left: -100%;
+    margin-left: 0;
+    max-width: 350px;
+    overflow-y: auto;
+    padding-bottom: 100px;
+    transition: all 0.3s ease;
+  }
+  nav #show-menu:checked ~ .content .links{
+    left: 0%;
+  }
+  .content .links li{
+    margin: 15px 20px;
+  }
+  .content .links li a,
+  .content .links li label{
+    line-height: 40px;
+    font-size: 20px;
+    display: block;
+    padding: 8px 18px;
+    cursor: pointer;
+  }
+  .content .links li a.desktop-link{
+    display: none;
+  }
+
+  .content .links ul,
+  .content .links ul ul{
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    background: none;
+    max-height: 0px;
+    overflow: hidden;
+  }
+  .content .links #show-features:checked ~ ul,
+  .content .links #show-services:checked ~ ul,
+  .content .links #show-items:checked ~ ul{
+    max-height: 100vh;
+  }
+  .content .links ul li{
+    margin: 7px 20px;
+  }
+  .content .links ul li a{
+    font-size: 18px;
+    line-height: 30px;
+    border-radius: 5px!important;
+  }
+}
+
+@media screen and (max-width: 400px){
+  .wrapper nav{
+    padding: 0 10px;
+  }
+  .content .logo a{
+    font-size: 27px;
+  }
+  .wrapper .search-box{
+    max-width: calc(100% - 70px);
+  }
+  .wrapper .search-box .go-icon{
+    width: 30px;
+    right: 0;
+  }
+  .wrapper .search-box input{
+    padding-right: 30px;
+  }
+}
+
+.main-body{
+  position: absolute;
+  top: 72%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  padding: 0 20px;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+.main-body h2{
+  font-size: 45px;
+  margin: 5px 0;
+}
+
+.star img{
+	width: 9px;
+	animation: star 3s linear infinite;
+}
+.star{
+	width:100%;
+	display: flex;
+	align-items: center;
+ 	justify-content: space-around;
+	position: absolute;
+	bottom: -590px;
+	
+}	
+.column {
+  float: left;
+  width: 20%;
+  padding: 5px;
+}
+
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.colo{
+ text-decoration: white;
+}
+</style>
+<body background="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw4NDw0NDQ0NDQ0NDQ0NDQ0NDQ8NDQ0NFREWFhURFRUYHSggGBoxGxUVITEhJSkrOi4uFx8zODMtNygtLisBCgoKDQ0NDg0NDysZFRkrKysrKy0rKysrKysrKysrKysrKysrLSsrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKgBKwMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIhABAQEAAQIGAwAAAAAAAAAAAAER4VHwITFBccHRgaGx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDiICoAApEAWAAsNSKBCEIC8oAFq2pfYBYvRIaIenmsTkgHQ0BUnuaQBalolBS1KAuoUABANAAQAVAAUAAUEIEAUAFRYBCEAE8GuUAoUAUARZ3+gARQEiLABGmaAX6/ipQAAQWoAACCoAAAqAKIoAACoQFioQCVUhAXkN+eiAVdSrQNXUPyBKsTTQIG9+BAQIXvyBUogLQoACAqFoACAAAqCILoCgqKAAABAUAA1FgLymgAtQBTSICieigdCU6IBAiA0lCgaVKAupoAaJVAoIAAAgCqAiAYKKahgKJiwCKgCkQgKCYC0SqBALAFQAgAJAkMBUoWAUDAAASgAqUAQBABBWhFVAAAACAoAKCQFwBFQAKoIpAARYAABEIAFAAAAAEoKCAAgAAIiqAAqEEUBQIAKQABFAABFCgAAAAEACIqAoAAICgAzVKACaAAIoioCgAAAaaCooAKIoAAAIClRQFQAAAAAAgAAIFAAASi0BABQBAEAUQBRFAAADFEAAAAAMUKGGAomKCCgAIAQJAAAAEBAFAAAAEoUAAAAAAFEAWAAECAAAqGgiiKACaoomqAlUBBUAARQAAAAEBRAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAf//Z" height="100%" width="100%">
+        <div class="whole">
+		    <div class="wrapper" >
+    		    <nav>
+			        <input type="checkbox" id="show-search">
+      		    	<input type="checkbox" id="show-menu">
+      			    <label for="show-menu" class="menu-icon"><i class="fas fa-bars"></i></label>
+      				<div class="content">
+     					 <div class="logo"><a href="#">NETFLIX</a></div>
+       						<ul class="links">
+       		   					<li><a href="">Home</a></li>
+          						<li><a href="">TV Shows</a></li>
+         					 	<li><a href="">Movies</a></li>
+                                <li><a href="">New & Popular</a></li>
+                                <li><a href="">My List</a></li>
+                                <li><a href="">Browse</a></li>
+        					</ul>
+      					</div>
+						<label for="show-search" class="search-icon"><i class="fas fa-search"></i></label>
+      						<form action="#" class="search-box">
+        						<input type="text" placeholder="Type Something to Search..." required>
+        						<button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right"></i></button>
+      			            </form>
+                         
+   		        </nav>
+ 	        </div>
+            <br>
+            <br>
+            <img class="ad" src="https://wallpapercave.com/wp/wp5993832.png" height="560px" width="100%">
+            <br>
+            <br>
+            <h2>Continue watching</h2>
+            <br>
+            <div class="colo">
+            <div class="row">
+              <div class="column">
+                <img  src="https://wallpapercave.com/wp/wp5993832.png" alt="Snow" style="width:100%" >
+              </div>
+              <div class="column">
+                <img src="https://wallpapers.com/images/featured/stranger-things-dkttxahzpl44tbsa.jpg" alt="Forest" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="https://p4.wallpaperbetter.com/wallpaper/236/971/722/5c1cf9f79f0d1-wallpaper-preview.jpg" alt="Mountains" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="https://wallpapercave.com/wp/wp12526882.jpg" alt="Mountains" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="https://images6.alphacoders.com/119/1191374.jpg" alt="Mountains" style="width:100%">
+              </div>
+            </div>
+        
+            <br>
+            <h2>Trending now</h2>
+            <br>
+            <div class="column">
+              <img src="https://e0.pxfuel.com/wallpapers/559/269/desktop-wallpaper-netflix-s-all-of-us-are-dead-is-the-k-drama-zombie-survival-series-we-always-wanted-our-review-geek-outpost-yoon-gwi-nam.jpg" alt="Forest" style="width:100%">
+            </div>
+            <div class="column">
+              <img src="https://wallpapercave.com/wp/wp7939387.jpg" alt="Mountains" style="width:100%">
+            </div>
+            <div class="column">
+              <img src="https://images8.alphacoders.com/112/1122026.jpg" alt="Mountains" style="width:100%">
+            </div>
+            <div class="column">
+              <img src="https://images7.alphacoders.com/131/1319752.jpeg" alt="Mountains" style="width:100%">
+            </div>
+            <div class="column">
+              <img src="https://images7.alphacoders.com/131/1319752.jpeg" alt="Mountains" style="width:100%">
+            </div>
+          </div>
+          <br>
+          <h2>Anime</h2>
+          <br>
+          <div class="column">
+            <img src="https://cdn.wallpapersafari.com/7/12/z1poL3.png" alt="Forest" style="width:100%">
+          </div>
+          <div class="column">
+            <img src="https://wallpapercave.com/wp/wp10544233.png" alt="Mountains" style="width:100%">
+          </div>
+          <div class="column">
+            <img src="https://wallpapercave.com/wp/wp12526882.jpg" alt="Mountains" style="width:100%">
+          </div>
+          <div class="column">
+            <img src="https://wallpapers.com/images/featured/spy-x-family-lle6ipxax2sc1tfg.jpg" alt="Mountains" style="width:100%">
+          </div>
+          <div class="column">
+            <img src="https://wallpapers.com/images/featured/naruto-shippuden-rxxyiybobk8m0q7u.jpg" alt="Mountains" style="width:100%">
+          </div>
+        </div>
+        <br>
+        <br>
+         </div>
+    </body>
+</html>
